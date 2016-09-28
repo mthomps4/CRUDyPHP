@@ -1,44 +1,47 @@
 <?php
-  //Connect to DB
-  try {
-    $db = new PDO("mysql:host=localhost;dbname=shirts4mike;port=3306","root");
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $db->exec("SET NAMES 'utf8'");
-  } catch (Exception $e) {
-    echo "Could not connect to the database.";
-    exit;
-  }
-  // Query DB
-  try{
-    $results = $db->query("SELECT name, price FROM products ORDER BY price");
-    echo "Ran Successfully. <br>\n";
-  } catch(Exception $e){
-    echo "Data could not be reached.";
-    exit;
-  }
+require 'inc/functions.php';
 
-  // echo "<pre>";
-  // var_dump($results->fetchAll(PDO::FETCH_ASSOC)); //FETCH_ASSOC = Associative array instead of Numerical id
+$pageTitle = "Time Tracker";
+$page = null;
 
-  $products = $results->fetchAll(PDO::FETCH_ASSOC);
-
-
-  // for($i=0; $i<count($products); $i++){
-  //   echo $products[$i]["name"] . "--";
-  //   echo "$" . $products[$i]["price"] . "<br>\n";
-  //   $i++;
-  // }
-  
-  foreach($products as $row => $innerArray){
-    $names[] = $innerArray["name"];
-    $prices[] = $innerArray["price"];
-
-    echo "Name: " . $innerArray["name"] . " -- Cost: " . $innerArray["price"] . "<br>";
-  }
-
-  // var_dump($names);
-  // var_dump($prices);
-
-
-
+include 'inc/header.php';
 ?>
+	<div class="section catalog random">
+    <div class="col-container actions-container">
+
+      <h1>Welcome</h1>
+      <p class="actions-copy">What would you like to do today?</p>
+      <div class="actions-wrapper">
+        <ul class="actions">
+          <li class="actions-item">
+            <a class="actions-link" href="task.php">
+              <span class="actions-icon">
+                <svg viewbox="0 0 64 64"><use xlink:href="#task_icon"></use></svg>
+              </span>
+              Add Task
+            </a>
+          </li>
+          <li class="actions-item">
+            <a class="actions-link" href="project.php">
+              <span class="actions-icon">
+                <svg viewbox="0 0 64 64"><use xlink:href="#project_icon"></use></svg>
+              </span>
+              Add Project
+            </a>
+          </li>
+          <li class="actions-item">
+            <a class="actions-link" href="reports.php">
+              <span class="actions-icon">
+                <svg viewbox="0 0 64 64"><use xlink:href="#report_icon"></use></svg>
+              </span>
+              View Reports
+            </a>
+          </li>
+        </ul>
+      </div>
+
+		</div>
+
+	</div>
+
+<?php include("inc/footer.php"); ?>

@@ -5,9 +5,9 @@ $page = "reports";
 $pageTitle = "Reports | Time Tracker";
 $filter = 'all';
 
-// if(!empty($_GET['filter'])){
-//   $filter = explode(':', filter_input(INPUT_GET, 'filter', FILTER_SANITIZE_STRING));
-// }
+if(!empty($_GET['filter'])){
+  $filter = explode(':', filter_input(INPUT_GET, 'filter', FILTER_SANITIZE_STRING));
+}
 
 include 'inc/header.php';
 ?>
@@ -20,15 +20,53 @@ include 'inc/header.php';
               <label for="filter">Filter:</label>
               <select id="filter" name="filter">
                 <option value=''> Select One </option>
+                <optgroup label="Projects">
                 <?php
                   foreach (get_project_list() as $item){
                     echo '<option value= "project:' . $item['project_id'] . '">';
                     echo $item['title'] . "</option>\n";
                   }
                  ?>
+               </optgroup>
+
+               <optgroup label="Category">
+                 <option value="category:Billable">Billable</option>
+                 <option value="category:Charity">Charity</option>
+                 <option value="category:Personal">Personal</option>
+               </optgroup>
+
+               <optgroup label="Date">
+                 <option value="date:<?php
+                 echo date('m/d/y', strtotime('-2 Sunday'));
+                 echo ":";
+                 echo date('m/d/y', strtotime('-1 Saturday'));
+                  ?>"> Last Week</option>
+
+                  <option value="date:<?php
+                  echo date('m/d/y', strtotime('-1 Sunday'));
+                  echo ":";
+                  echo date('m/d/y');
+                   ?>"> This Week</option>
+
+                   <option value="date:<?php
+                   echo date('m/d/y', strtotime('first day of last month'));
+                   echo ":";
+                   echo date('m/d/y', strtotime('last day of last month'));
+                    ?>"> Last Month</option>
+
+                    <option value="date:<?php
+                    echo date('m/d/y', strtotime('first day of this month'));
+                    echo ":";
+                    echo date('m/d/y');
+                     ?>"> This Month</option>
+               </optgroup>
+
               </select>
-              <input class="button" type"submit" value="Run" />
+
+              <button class="button" type"submit">Run</button>
             </form>
+
+
 
         </div>
         <div class="section page">
